@@ -4,7 +4,8 @@
   "description": "API simple para la generacion de planes de estudios mediante un tema y parametro de semanas",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
