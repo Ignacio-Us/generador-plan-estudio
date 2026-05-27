@@ -1,0 +1,20 @@
+{
+  "name": "generador-plan-estudio",
+  "version": "1.0.0",
+  "description": "API simple para la generacion de planes de estudios mediante un tema y parametro de semanas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "cypress": "^15.16.0",
+    "nodemon": "^3.1.14"
+  }
+}
