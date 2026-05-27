@@ -1,31 +1,26 @@
-const generateStudyPlan = (req, res) => {
-    const { topics, weeks, weekly_dedication, restrictions } = req.body;
+const { generatePlanFromLLM } = require('../services/openrouter.service');
 
-    // 2. Esquema de Salida (Mock / Datos simulados)
-    // Este es el contrato exacto que el LLM deberá respetar en la Fase 3.
-    const mockResponse = {
-        metadata: {
-            source: "llm",
-            generated_at: new Date().toISOString()
-        },
-        plan: [
-            {
-                week_number: 1,
-                objectives: [
-                    "Comprender los conceptos básicos del primer tema.",
-                    "Establecer el entorno de estudio."
-                ],
-                activities: [
-                    "Leer documentación oficial del tema 1.",
-                    "Realizar un ejercicio práctico inicial."
-                ],
-                estimated_hours: weekly_dedication || 10,
-                topics_covered: topics ? [topics[0]] : ["Tema de ejemplo"]
+const generateStudyPlan = async (req, res) => {
+    try {
+        const { topics, weeks, weekly_dedication, restrictions } = req.body;
+
+        const planResult = await generatePlanFromLLM(topics, weeks, weekly_dedication, restrictions);
+
+        const finalResponse = {
+            metadata: {
+                source: "llm",
+                generated_at: new Date().toISOString()
             },
-        ]
-    };
+            plan: planResult
+        };
 
-    res.status(200).json(mockResponse);
+        res.status(200).json(finalResponse);
+    } catch (error) {
+        res.status(502).json({
+            error: "Error al comunicarse con el proveedor del LLM.",
+            details: error.message
+        });
+    }
 };
 
 module.exports = {
