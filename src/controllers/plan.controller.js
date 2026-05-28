@@ -16,7 +16,9 @@ const generateStudyPlan = async (req, res) => {
 
         res.status(200).json(finalResponse);
     } catch (error) {
-        res.status(502).json({
+        console.error("Error generating study plan:", error.message);
+        
+        return res.status(502).json({
             error: "Error al comunicarse con el proveedor del LLM.",
             details: error.message
         });
