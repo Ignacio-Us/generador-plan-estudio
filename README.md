@@ -77,21 +77,24 @@ Genera el plan de estudio.
 
 ## Evidencia de la Ejecucion de Pruebas
 
+Las imagenes se encuentran en el directorio `docs/`
+
 1. **Ejecución prueba de estado del servidor (HTTP 200 OK)**
 
-![estado del servidor](docs\prueba_salud_estado_servidor.png)
+![estado del servidor](https://github.com/Ignacio-Us/generador-plan-estudio/blob/develop/docs/prueba_salud_estado_servidor.png)
 
 2. **Ejecución prueba solicitud invalida (HTTP 400 Bad Request)**
 
-![bad request](docs\prueba_solicitud_invalida.png)
+![bad request](https://github.com/Ignacio-Us/generador-plan-estudio/blob/develop/docs/prueba_solicitud_invalida.png)
 
 3. **Ejecución prueba solicitud valida (HTTP 200 OK)**
 
-![solicitud valida](docs\vista_general_prueba_response_successful.png)
+![solicitud valida](https://github.com/Ignacio-Us/generador-plan-estudio/blob/develop/docs/vista_general_prueba_response_successful.png)
 
 4. **Ejecución prueba solicitud valida en detalle**
 
-![valida detalle](docs\prueba_solicitud_valida_detalle.png)
+![valida detalle](https://github.com/Ignacio-Us/generador-plan-estudio/blob/develop/docs/prueba_solicitud_valida_detalle.png)
 
 5. **Ejecución prueba de coherencia en detalle**
-![coherencia](docs\prueba_coherencia_detalle.png)
+
+![coherencia](https://github.com/Ignacio-Us/generador-plan-estudio/blob/develop/docs/prueba_coherencia_detalle.png)
