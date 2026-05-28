@@ -1,5 +1,5 @@
 const generatePlanFromLLM = async (topics, weeks, weekly_dedication, restrictions) => {
-    const apiKey = process.env.OPENROUTER_API_KEY;
+    const apiKey = process.env.LLM_API_KEY;
     
     const systemPrompt = `
       Eres un experto en diseño curricular y planificación académica.
@@ -45,7 +45,9 @@ const generatePlanFromLLM = async (topics, weeks, weekly_dedication, restriction
           "X-Title": "API Generador de Planes de Estudio",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        // Cancela la peticion si el LLM tarda mas de 35 segundos
+        signal: AbortSignal.timeout(35000) 
       });
   
       if (!response.ok) {
@@ -55,13 +57,27 @@ const generatePlanFromLLM = async (topics, weeks, weekly_dedication, restriction
   
       const data = await response.json();
       
-      // Extraer y parsear el contenido JSON de la respuesta del LLM
-      const llmContent = data.choices[0].message.content;
+      let llmContent = data.choices[0].message.content;
+          
+      // Limpia etiquetas markdown si el LLM las incluye por error
+      llmContent = llmContent.replace(/```json/g, "").replace(/```/g, "").trim();
+      
       const parsedContent = JSON.parse(llmContent);
       
+      // Valida que el objeto no sea nulo y contenga la propiedad requerida
+      if (!parsedContent || !parsedContent.plan) {
+        console.error("Estructura JSON invalida recibida:", parsedContent);
+        throw new Error("El LLM no devolvio la estructura esperada (falta la propiedad 'plan').");
+      }
+      
       return parsedContent.plan;
+      
     } catch (error) {
-      console.error("Error en generatePlanFromLLM:", error);
+      // Maneja especificamente el error por tiempo de espera
+      if (error.name === 'TimeoutError') {
+         throw new Error("OpenRouter tardo demasiado en responder.");
+      }
+      console.error("Error en generatePlanFromLLM:", error.message);
       throw error;
     }
   };
